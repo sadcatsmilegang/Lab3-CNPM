@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng ký tài khoản - Paradise Resort</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-content">
+      <div class="logo">🌴 <span>Paradise</span> Resort</div>
+      <a href="index.html" class="btn btn-outline">Về trang chủ</a>
+    </div>
+  </header>
+
+  <div class="container" style="max-width: 500px; margin: 50px auto; background: #fff; padding: 35px; border-radius: 12px; box-shadow: var(--shadow);">
+    <h2 style="text-align: center; margin-bottom: 25px;">Đăng Ký Tài Khoản</h2>
+    <form id="registerForm">
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Họ và tên</label>
+        <input type="text" id="regName" required placeholder="Nguyễn Văn A">
+      </div>
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Email</label>
+        <input type="email" id="regEmail" required placeholder="email@domain.com">
+      </div>
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Số điện thoại</label>
+        <input type="tel" id="regPhone" required placeholder="0901234567">
+      </div>
+      <div class="form-group" style="margin-bottom: 20px;">
+        <label>Mật khẩu (Tối thiểu 6 ký tự)</label>
+        <input type="password" id="regPass" minlength="6" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Tạo tài khoản</button>
+      <p style="text-align: center; margin-top: 15px; font-size: 14px;">
+        Đã có tài khoản? <a href="login.html" style="color: var(--primary);">Đăng nhập ngay</a>
+      </p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const users = JSON.parse(localStorage.getItem('resortUsers') || '[]');
+      const email = document.getElementById('regEmail').value;
+      if (users.some(u => u.email === email)) {
+        alert('Email này đã được đăng ký!');
+        return;
+      }
+      users.push({
+        name: document.getElementById('regName').value,
+        email: email,
+        phone: document.getElementById('regPhone').value,
+        pass: btoa(document.getElementById('regPass').value) // Simulated hash
+      });
+      localStorage.setItem('resortUsers', JSON.stringify(users));
+      alert('Đăng ký tài khoản thành công! Hãy đăng nhập.');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>
